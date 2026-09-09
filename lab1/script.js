@@ -1,13 +1,11 @@
 console.log("Інструкція:");
-console.log('Використання: triangle(значення1, "тип1", значення2, "тип2")');
+console.log('triangle(значення1, "тип1", значення2, "тип2")');
 console.log('Типи: "leg", "hypotenuse", "adjacent angle", "opposite angle", "angle"');
 console.log("Кути вводяться у градусах.");
-console.log('Приклад: triangle(7, "leg", 18, "hypotenuse")');
-
 
 function triangle(value1, type1, value2, type2) {
 
-    // Перевірка чисел
+    // Перевірка на нуль та від'ємні числа
     if (value1 <= 0 || value2 <= 0) {
         return "Zero or negative input";
     }
@@ -26,7 +24,7 @@ function triangle(value1, type1, value2, type2) {
     }
 
 
-    // ДВА КАТЕТИ
+    // 1. Два катети
     if (type1 == "leg" && type2 == "leg") {
 
         a = value1;
@@ -39,7 +37,7 @@ function triangle(value1, type1, value2, type2) {
     }
 
 
-    // КАТЕТ + ГІПОТЕНУЗА
+    // 2. Катет і гіпотенуза
     else if (
         (type1 == "leg" && type2 == "hypotenuse") ||
         (type1 == "hypotenuse" && type2 == "leg")
@@ -64,7 +62,7 @@ function triangle(value1, type1, value2, type2) {
     }
 
 
-    // ГІПОТЕНУЗА + КУТ
+    // 3. Гіпотенуза і кут
     else if (
         (type1 == "hypotenuse" && type2 == "angle") ||
         (type1 == "angle" && type2 == "hypotenuse")
@@ -89,7 +87,7 @@ function triangle(value1, type1, value2, type2) {
     }
 
 
-    // КАТЕТ + ПРИЛЕГЛИЙ КУТ
+    // 4. Катет і прилеглий кут
     else if (
         (type1 == "leg" && type2 == "adjacent angle") ||
         (type1 == "adjacent angle" && type2 == "leg")
@@ -114,7 +112,7 @@ function triangle(value1, type1, value2, type2) {
     }
 
 
-    // КАТЕТ + ПРОТИЛЕЖНИЙ КУТ
+    // 5. Катет і протилежний кут
     else if (
         (type1 == "leg" && type2 == "opposite angle") ||
         (type1 == "opposite angle" && type2 == "leg")
@@ -139,14 +137,14 @@ function triangle(value1, type1, value2, type2) {
     }
 
 
-    // ЯКЩО ТИПИ НЕПРАВИЛЬНІ АБО НЕСУМІСНІ
+    // Якщо типи неправильні або несумісні
     else {
-        console.log("Перечитайте інструкцію та введіть правильні типи.");
+        console.log("Перечитайте інструкцію.");
         return "failed";
     }
 
 
-    // ВИВЕДЕННЯ РЕЗУЛЬТАТУ
+    // Виведення результату
     console.log("a =", a);
     console.log("b =", b);
     console.log("c =", c);
