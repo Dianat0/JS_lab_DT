@@ -1,44 +1,32 @@
-console.log("ІНСТРУКЦІЯ:");
-console.log("triangle(значення1, тип1, значення2, тип2)");
-console.log("Можливі типи: leg, hypotenuse, adjacent angle, opposite angle, angle");
-console.log("Кути потрібно вводити у градусах.");
-console.log("Приклади:");
-console.log('triangle(4, "leg", 8, "hypotenuse")');
-console.log('triangle(8, "hypotenuse", 4, "leg")');
-console.log('triangle(30, "angle", 10, "hypotenuse")');
+console.log("Інструкція:");
+console.log('Використання: triangle(значення1, "тип1", значення2, "тип2")');
+console.log('Типи: "leg", "hypotenuse", "adjacent angle", "opposite angle", "angle"');
+console.log("Кути вводяться у градусах.");
+console.log('Приклад: triangle(7, "leg", 18, "hypotenuse")');
+
 
 function triangle(value1, type1, value2, type2) {
 
-    // Перевірка типів
-    let types = ["leg", "hypotenuse", "adjacent angle", "opposite angle", "angle"];
-
-    if (!types.includes(type1) || !types.includes(type2)) {
-        console.log("Неправильний тип. Перечитайте інструкцію.");
-        return "failed";
-    }
-
     // Перевірка чисел
-    if (typeof value1 !== "number" || typeof value2 !== "number" ||
-        value1 <= 0 || value2 <= 0) {
-        return "Некоректні значення: числа повинні бути більшими за 0";
+    if (value1 <= 0 || value2 <= 0) {
+        return "Zero or negative input";
     }
 
     let a, b, c;
     let alpha, beta;
 
     // Переведення градусів у радіани
-    function toRadians(degrees) {
-        return degrees * Math.PI / 180;
+    function rad(angle) {
+        return angle * Math.PI / 180;
     }
 
     // Переведення радіанів у градуси
-    function toDegrees(radians) {
-        return radians * 180 / Math.PI;
+    function deg(angle) {
+        return angle * 180 / Math.PI;
     }
 
-    // --------------------------------------------------
-    // 1. ДВА КАТЕТИ
-    // --------------------------------------------------
+
+    // ДВА КАТЕТИ
     if (type1 == "leg" && type2 == "leg") {
 
         a = value1;
@@ -46,15 +34,16 @@ function triangle(value1, type1, value2, type2) {
 
         c = Math.sqrt(a * a + b * b);
 
-        alpha = toDegrees(Math.atan(a / b));
+        alpha = deg(Math.atan(a / b));
         beta = 90 - alpha;
     }
 
-    // --------------------------------------------------
-    // 2. КАТЕТ + ГІПОТЕНУЗА
-    // --------------------------------------------------
-    else if (type1 == "leg" && type2 == "hypotenuse" ||
-             type1 == "hypotenuse" && type2 == "leg") {
+
+    // КАТЕТ + ГІПОТЕНУЗА
+    else if (
+        (type1 == "leg" && type2 == "hypotenuse") ||
+        (type1 == "hypotenuse" && type2 == "leg")
+    ) {
 
         if (type1 == "leg") {
             a = value1;
@@ -65,20 +54,21 @@ function triangle(value1, type1, value2, type2) {
         }
 
         if (a >= c) {
-            return "Некоректні значення: катет не може бути більшим або рівним гіпотенузі";
+            return "Leg must be smaller than hypotenuse";
         }
 
         b = Math.sqrt(c * c - a * a);
 
-        alpha = toDegrees(Math.asin(a / c));
+        alpha = deg(Math.asin(a / c));
         beta = 90 - alpha;
     }
 
-    // --------------------------------------------------
-    // 3. ГІПОТЕНУЗА + КУТ
-    // --------------------------------------------------
-    else if (type1 == "hypotenuse" && type2 == "angle" ||
-             type1 == "angle" && type2 == "hypotenuse") {
+
+    // ГІПОТЕНУЗА + КУТ
+    else if (
+        (type1 == "hypotenuse" && type2 == "angle") ||
+        (type1 == "angle" && type2 == "hypotenuse")
+    ) {
 
         if (type1 == "hypotenuse") {
             c = value1;
@@ -89,102 +79,79 @@ function triangle(value1, type1, value2, type2) {
         }
 
         if (alpha <= 0 || alpha >= 90) {
-            return "Некоректний кут: гострий кут повинен бути від 0 до 90 градусів";
+            return "Angle must be between 0 and 90 degrees";
         }
 
         beta = 90 - alpha;
 
-        a = c * Math.sin(toRadians(alpha));
-        b = c * Math.cos(toRadians(alpha));
+        a = c * Math.sin(rad(alpha));
+        b = c * Math.cos(rad(alpha));
     }
 
-    // --------------------------------------------------
-    // 4. КАТЕТ + ПРИЛЕГЛИЙ КУТ
-    // --------------------------------------------------
-    else if (type1 == "leg" && type2 == "adjacent angle" ||
-             type1 == "adjacent angle" && type2 == "leg") {
 
-        let leg;
-        let angle;
+    // КАТЕТ + ПРИЛЕГЛИЙ КУТ
+    else if (
+        (type1 == "leg" && type2 == "adjacent angle") ||
+        (type1 == "adjacent angle" && type2 == "leg")
+    ) {
 
         if (type1 == "leg") {
-            leg = value1;
-            angle = value2;
+            a = value1;
+            beta = value2;
         } else {
-            leg = value2;
-            angle = value1;
+            a = value2;
+            beta = value1;
         }
 
-        if (angle <= 0 || angle >= 90) {
-            return "Некоректний кут: гострий кут повинен бути від 0 до 90 градусів";
+        if (beta <= 0 || beta >= 90) {
+            return "Angle must be between 0 and 90 degrees";
         }
 
-        // Вважаємо заданий катет a,
-        // а прилеглий до нього кут — beta
-        a = leg;
-        beta = angle;
         alpha = 90 - beta;
 
-        c = a / Math.sin(toRadians(alpha));
-        b = a / Math.tan(toRadians(beta));
+        b = a / Math.tan(rad(beta));
+        c = a / Math.sin(rad(alpha));
     }
 
-    // --------------------------------------------------
-    // 5. КАТЕТ + ПРОТИЛЕЖНИЙ КУТ
-    // --------------------------------------------------
-    else if (type1 == "leg" && type2 == "opposite angle" ||
-             type1 == "opposite angle" && type2 == "leg") {
 
-        let leg;
-        let angle;
+    // КАТЕТ + ПРОТИЛЕЖНИЙ КУТ
+    else if (
+        (type1 == "leg" && type2 == "opposite angle") ||
+        (type1 == "opposite angle" && type2 == "leg")
+    ) {
 
         if (type1 == "leg") {
-            leg = value1;
-            angle = value2;
+            a = value1;
+            alpha = value2;
         } else {
-            leg = value2;
-            angle = value1;
+            a = value2;
+            alpha = value1;
         }
 
-        if (angle <= 0 || angle >= 90) {
-            return "Некоректний кут: гострий кут повинен бути від 0 до 90 градусів";
+        if (alpha <= 0 || alpha >= 90) {
+            return "Angle must be between 0 and 90 degrees";
         }
 
-        // Вважаємо заданий катет a,
-        // а протилежний до нього кут — alpha
-        a = leg;
-        alpha = angle;
         beta = 90 - alpha;
 
-        c = a / Math.sin(toRadians(alpha));
-        b = a / Math.tan(toRadians(alpha));
+        b = a / Math.tan(rad(alpha));
+        c = a / Math.sin(rad(alpha));
     }
 
-    // --------------------------------------------------
-    // НЕСУМІСНА ПАРА ТИПІВ
-    // --------------------------------------------------
+
+    // ЯКЩО ТИПИ НЕПРАВИЛЬНІ АБО НЕСУМІСНІ
     else {
-        console.log("Несумісна пара типів. Перечитайте інструкцію.");
+        console.log("Перечитайте інструкцію та введіть правильні типи.");
         return "failed";
     }
 
-    // Перевірка результатів
-    if (a <= 0 || b <= 0 || c <= 0 ||
-        alpha <= 0 || alpha >= 90 ||
-        beta <= 0 || beta >= 90) {
-        return "Некоректні дані";
-    }
 
-    // --------------------------------------------------
     // ВИВЕДЕННЯ РЕЗУЛЬТАТУ
-    // --------------------------------------------------
-
-    console.log("Результат:");
-    console.log("a =", a.toFixed(2));
-    console.log("b =", b.toFixed(2));
-    console.log("c =", c.toFixed(2));
-    console.log("alpha =", alpha.toFixed(2), "градусів");
-    console.log("beta =", beta.toFixed(2), "градусів");
+    console.log("a =", a);
+    console.log("b =", b);
+    console.log("c =", c);
+    console.log("alpha =", alpha);
+    console.log("beta =", beta);
 
     return "success";
 }
