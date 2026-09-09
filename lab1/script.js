@@ -65,10 +65,10 @@ function triangle(val1, type1, val2, type2) {
         return "failed";
     }
     // Виведення результату
-    console.log(`a = ${a}`);
-    console.log(`b = ${b}`);
-    console.log(`c = ${c}`);
-    console.log(`alpha = ${alpha}`);
-    console.log(`beta = ${beta}`);
+    console.log("a =", a);
+    console.log("b =", b);
+    console.log("c =", c);
+    console.log("alpha =", alpha);
+    console.log("beta =", beta);
     return "success";
 }
