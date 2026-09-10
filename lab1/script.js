@@ -33,7 +33,7 @@ function triangle(val1, type1, val2, type2) {
     else if ((type1 === "leg" && type2 === "adjacent angle") || (type1 === "adjacent angle" && type2 === "leg")) {
         if (type1 === "leg") { a = val1; beta = val2; } 
         else { a = val2; beta = val1; }
-        if (beta <= 0.000001 || beta >= 90) 
+        if (beta <= 0 || beta >= 90) 
             return "Кут повинен бути гострим (від 0 до 90 градусів)";
         alpha = 90 - beta;
         b = a * Math.tan(rad(beta));
@@ -43,7 +43,7 @@ function triangle(val1, type1, val2, type2) {
     else if ((type1 === "leg" && type2 === "opposite angle") || (type1 === "opposite angle" && type2 === "leg")) {
         if (type1 === "leg") { a = val1; alpha = val2; } 
         else { a = val2; alpha = val1; }
-        if (alpha <= 0.000001 || alpha >= 90)
+        if (alpha <= 0 || alpha >= 90)
             return "Кут повинен бути гострим (від 0 до 90 градусів)";
         beta = 90 - alpha;
         b = a / Math.tan(rad(alpha));
@@ -53,7 +53,7 @@ function triangle(val1, type1, val2, type2) {
     else if ((type1 === "hypotenuse" && type2 === "angle") || (type1 === "angle" && type2 === "hypotenuse")) {
         if (type1 === "hypotenuse") { c = val1; alpha = val2; } 
         else { c = val2; alpha = val1; }
-        if (alpha <= 0.000001 || alpha >= 90) 
+        if (alpha <= 0 || alpha >= 90) 
             return "Кут повинен бути гострим (від 0 до 90 градусів)";
         beta = 90 - alpha;
         a = c * Math.sin(rad(alpha));
