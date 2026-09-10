@@ -23,8 +23,9 @@ function triangle(val1, type1, val2, type2) {
     else if ((type1 === "leg" && type2 === "hypotenuse") || (type1 === "hypotenuse" && type2 === "leg")) {
         if (type1 === "leg") { a = val1; c = val2; } 
         else { a = val2; c = val1; }
-        if (a >= c) 
-            return "Катет не може бути більшим або рівним гіпотенузі";
+        if (a >= c - 0.000001) {
+            return "Увага: катет занадто близький до гіпотенузи, можливе виникнення похибки.";
+        }
         b = Math.sqrt(c * c - a * a);
         alpha = Math.asin(a / c) * (180 / Math.PI);
         beta = 90 - alpha;
