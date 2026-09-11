@@ -341,6 +341,4 @@ PaintRed(Obj2);
 PaintYellow(Obj2);
 
 console.log("--- Obj3 ---");
-PaintBlue(Obj3);
-PaintRed(Obj3);
-PaintYellow(Obj3);
+
