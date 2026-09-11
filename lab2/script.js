@@ -15,7 +15,7 @@ car1["number of accidents"] = 0;
 // 1.2.4: Об'єкт car2 за допомогою синтаксису літерала
 var car2 = {
   color: "blue",
-  maxSpeed: 180, // Виправлено '=' на ':'
+  maxSpeed = 180, // Виправлено '=' на ':'
   driver: {
     name: "Тарас Шевченко",
     category: "B",
