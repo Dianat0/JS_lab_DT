@@ -1,7 +1,3 @@
-// ==========================================
-// Завдання 1.2.2 – 1.2.10 (БЕЗ ES6 класів)
-// ==========================================
-
 console.log("=== ЧАСТИНА 1: ES5 (без синтаксису класів ES6) ===");
 
 // 1.2.3: Об'єкт car1 за допомогою new Object()
@@ -19,7 +15,7 @@ car1["number of accidents"] = 0;
 // 1.2.4: Об'єкт car2 за допомогою синтаксису літерала
 var car2 = {
   color: "blue",
-  maxSpeed = 180,
+  maxSpeed: 180, // Виправлено '=' на ':'
   driver: {
     name: "Тарас Шевченко",
     category: "B",
@@ -161,15 +157,21 @@ class Rhombus extends Square {
     this.beta = beta;   // гострий кут
   }
 
-  // 1.2.22: Ґеттери та сеттери для Rhombus (оскільки Parallelogram успадковується від Rectangle)
+  // 1.2.22: Ґеттери та сеттери для Rhombus
   get sideA() { return this.a; }
   set sideA(val) { this.a = val; }
 
   get angleAlpha() { return this.alpha; }
-  set angleAlpha(val) { this.alpha = val; }
+  set angleAlpha(val) { 
+    this.alpha = val;
+    this.beta = 180 - val;
+  }
 
   get angleBeta() { return this.beta; }
-  set angleBeta(val) { this.beta = val; }
+  set angleBeta(val) { 
+    this.beta = val;
+    this.alpha = 180 - val;
+  }
 
   static help() {
     console.log("Ромб — це паралелограм, у якого всі сторони рівні, а протилежні кути рівні.");
