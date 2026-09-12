@@ -1,5 +1,3 @@
-// ===== Частина 1: без класів =====
-
 var car1 = new Object();
 car1.color = "red";
 car1.maxSpeed = 220;
