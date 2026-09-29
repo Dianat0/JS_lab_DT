@@ -8,7 +8,6 @@ function TriangleArea(base = 7, height = 3) {
 TriangleArea(3, 6); 
 TriangleArea();   
 
-
 //Завдання 2: конструктор Boat (без class)
 function Boat(color, maxSpeed, maxTonnage, brand, countryOfRegistration) {
   this.color = color;
@@ -73,5 +72,5 @@ function SubGenerator(number) {
 const subtract5 = SubGenerator(5);
 const subtract2_5 = SubGenerator(2.5);
 
-console.log(subtract5(20));    // 20 - 5 = 15
-console.log(subtract2_5(10));  // 10 - 2.5 = 7.5
+console.log(subtract5(20));    
+console.log(subtract2_5(10));  
