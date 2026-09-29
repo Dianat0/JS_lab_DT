@@ -39,9 +39,9 @@ class SimpleCircle {
   set majorRadius(value) {
     this._majorRadius = value;
   }
-  // get majorRadius() {
-  //   return this._majorRadius;
-  // }
+  get majorRadius() {
+    return this._majorRadius;
+  }
 }
 
 class SimpleEllipse extends SimpleCircle {
