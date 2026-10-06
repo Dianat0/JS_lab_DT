@@ -1,9 +1,6 @@
 var SortLib = (function () {
   'use strict';
- 
-  // ---------- Допоміжні функції ----------
- 
-  // Рахує кількість undefined-елементів (у т.ч. "дір" розрідженого масиву)
+  
   function countUndefined(arr) {
     let count = 0;
     for (let i = 0; i < arr.length; i++) {
@@ -12,12 +9,9 @@ var SortLib = (function () {
     return count;
   }
  
-  // Повертає true, якщо a має йти ПІСЛЯ b (тобто потрібен обмін) для заданого порядку
   function needSwap(a, b, order) {
     return order === 'desc' ? a < b : a > b;
   }
- 
-  // Повертає true, якщо a "краще" за b у сенсі заданого порядку (для пошуку мін/макс)
   function isBetter(a, b, order) {
     return order === 'desc' ? a > b : a < b;
   }
@@ -43,7 +37,7 @@ var SortLib = (function () {
     );
   }
  
-  // ---------- 1. Сортування обміном (Bubble Sort) ----------
+  //1. Сортування обміном (Bubble Sort)
   function bubbleSort(inputArr, order) {
     order = normalizeOrder(order);
     const undefinedCount = countUndefined(inputArr);
@@ -64,7 +58,7 @@ var SortLib = (function () {
           swappedInPass = true;
         }
       }
-      if (!swappedInPass) break; // оптимізація: масив уже відсортований
+      if (!swappedInPass) break; 
     }
  
     reportStats('bubbleSort', order, comparisons, swaps, 'обмінів');
@@ -73,7 +67,7 @@ var SortLib = (function () {
     return arr.concat(new Array(undefinedCount).fill(undefined));
   }
  
-  // ---------- 2. Сортування вибором мінімальних елементів (Selection Sort) ----------
+  //2. Сортування вибором мінімальних елементів (Selection Sort)
   function selectionSort(inputArr, order) {
     order = normalizeOrder(order);
     const undefinedCount = countUndefined(inputArr);
@@ -104,7 +98,7 @@ var SortLib = (function () {
     return arr.concat(new Array(undefinedCount).fill(undefined));
   }
  
-  // ---------- 3. Сортування вставками (Insertion Sort) ----------
+  //3. Сортування вставками (Insertion Sort)
   function insertionSort(inputArr, order) {
     order = normalizeOrder(order);
     const undefinedCount = countUndefined(inputArr);
@@ -134,7 +128,7 @@ var SortLib = (function () {
     return arr.concat(new Array(undefinedCount).fill(undefined));
   }
  
-  // ---------- 4. Сортування Шелла (Shell Sort) ----------
+  //4. Сортування Шелла (Shell Sort)
   function shellSort(inputArr, order) {
     order = normalizeOrder(order);
     const undefinedCount = countUndefined(inputArr);
@@ -169,7 +163,7 @@ var SortLib = (function () {
     return arr.concat(new Array(undefinedCount).fill(undefined));
   }
  
-  // ---------- 5. Сортування Хоара / швидке сортування (Hoare Quick Sort) ----------
+  // 5. Сортування Хоара / швидке сортування (Hoare Quick Sort)
   function quickSort(inputArr, order) {
     order = normalizeOrder(order);
     const undefinedCount = countUndefined(inputArr);
@@ -221,7 +215,7 @@ var SortLib = (function () {
     return arr.concat(new Array(undefinedCount).fill(undefined));
   }
  
-  // ---------- Публічний інтерфейс псевдопростору імен ----------
+  // Публічний інтерфейс псевдопростору імен 
   return {
     bubbleSort,
     selectionSort,
@@ -231,8 +225,7 @@ var SortLib = (function () {
   };
 })();
  
-// Для можливого використання в Node.js (необов'язково для лабораторної,
-// але не заважає роботі в браузері)
+// Для використання в Node.js
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = SortLib;
 }
