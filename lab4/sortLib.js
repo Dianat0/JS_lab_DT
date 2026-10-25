@@ -229,3 +229,43 @@ var SortLib = (function () {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = SortLib;
 }
+
+ // Автоматичний запуск усіх алгоритмів сортування
+console.log("тестування бібліотеки SortLib");
+
+// Тестовий масив
+const testArray = [45, 12, 78, 3, 56, 12,  undefined, 34];
+
+console.log("\nПочатковий масив:");
+console.log(testArray);
+
+// Список алгоритмів сортування
+const methods = [
+  ["Bubble Sort", SortLib.bubbleSort],
+  ["Selection Sort", SortLib.selectionSort],
+  ["Insertion Sort", SortLib.insertionSort],
+  ["Shell Sort", SortLib.shellSort],
+  ["Quick Sort (Hoare)", SortLib.quickSort]
+];
+
+// Автоматичне тестування за зростанням і спаданням
+for (const order of ["asc", "desc"]) {
+if (order === "asc") {
+  console.log("СОРТУВАННЯ ЗА ЗРОСТАННЯМ");
+} else {
+  console.log("СОРТУВАННЯ ЗА СПАДАННЯМ");
+}
+
+  for (const [name, sortFunction] of methods) {
+    console.log("\n--- " + name + " ---");
+
+    // Передаємо копію масиву, щоб не змінювати оригінал
+    const result = sortFunction([...testArray], order);
+
+    console.log("Результат сортування:");
+    console.log(result);
+  }
+}
+console.log("тестування завершено");
+
+
