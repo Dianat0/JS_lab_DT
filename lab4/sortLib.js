@@ -1,8 +1,7 @@
-
 var SortLib = (function () {
   'use strict';
 
-  // Підрахунок елементів undefined
+  // Підрахунок undefined
   function countUndefined(arr) {
     let count = 0;
 
@@ -15,50 +14,51 @@ var SortLib = (function () {
     return count;
   }
 
-  // Перевірка необхідності обміну елементів
+  // Перевірка необхідності обміну
   function needSwap(a, b, order) {
     return order === 'desc' ? a < b : a > b;
   }
 
-  // Перевірка, чи кращий поточний елемент
+  // Перевірка кращого елемента
   function isBetter(a, b, order) {
     return order === 'desc' ? a > b : a < b;
   }
 
-  // Визначення порядку сортування
+  // Визначення напрямку сортування
   function normalizeOrder(order) {
     return order === 'desc' ? 'desc' : 'asc';
   }
 
   // Повідомлення про undefined
-  function reportSparse(undefinedCount, totalLength, methodName) {
-    if (undefinedCount > 0) {
+  function reportSparse(count, length, name) {
+    if (count > 0) {
       console.log(
-        '[' + methodName + '] Знайдено undefined: ' +
-        undefinedCount + ' із ' + totalLength +
+        name + ': знайдено undefined: ' +
+        count + ' із ' + length +
         '. Елементи переміщено в кінець.'
       );
     }
   }
 
   // Виведення статистики
-  function reportStats(methodName, order, comparisons, swaps, label) {
+  function reportStats(name, order, comparisons, operations, label) {
     const orderName = order === 'desc' ? 'спадання' : 'зростання';
 
     console.log(
-      '[' + methodName + '] Порядок: ' + orderName +
+      name + ' | Порядок: ' + orderName +
       ' | Порівнянь: ' + comparisons +
-      ' | ' + label + ': ' + swaps
+      ' | ' + label + ': ' + operations
     );
   }
 
-  // Підготовка масиву до сортування
+  // Підготовка масиву
   function prepareArray(inputArr) {
     if (!Array.isArray(inputArr)) {
       throw new TypeError('Потрібно передати масив.');
     }
 
     const undefinedCount = countUndefined(inputArr);
+
     const arr = inputArr.filter(function (x) {
       return x !== undefined;
     });
@@ -69,12 +69,12 @@ var SortLib = (function () {
     };
   }
 
-  // Формування результату
+  // Додавання undefined у кінець
   function finishSort(arr, undefinedCount) {
     return arr.concat(new Array(undefinedCount).fill(undefined));
   }
 
-  // 1. Сортування обміном (Bubble Sort)
+  // Сортування обміном
   function bubbleSort(inputArr, order) {
     order = normalizeOrder(order);
 
@@ -106,13 +106,13 @@ var SortLib = (function () {
       }
     }
 
-    reportStats('bubbleSort', order, comparisons, swaps, 'Обмінів');
-    reportSparse(undefinedCount, inputArr.length, 'bubbleSort');
+    reportStats('Bubble Sort', order, comparisons, swaps, 'Обмінів');
+    reportSparse(undefinedCount, inputArr.length, 'Bubble Sort');
 
     return finishSort(arr, undefinedCount);
   }
 
-  // 2. Сортування вибором (Selection Sort)
+  // Сортування вибором
   function selectionSort(inputArr, order) {
     order = normalizeOrder(order);
 
@@ -138,17 +138,18 @@ var SortLib = (function () {
         const temp = arr[i];
         arr[i] = arr[selectedIdx];
         arr[selectedIdx] = temp;
+
         swaps++;
       }
     }
 
-    reportStats('selectionSort', order, comparisons, swaps, 'Обмінів');
-    reportSparse(undefinedCount, inputArr.length, 'selectionSort');
+    reportStats('Selection Sort', order, comparisons, swaps, 'Обмінів');
+    reportSparse(undefinedCount, inputArr.length, 'Selection Sort');
 
     return finishSort(arr, undefinedCount);
   }
 
-  // 3. Сортування вставками (Insertion Sort)
+  // Сортування вставками
   function insertionSort(inputArr, order) {
     order = normalizeOrder(order);
 
@@ -178,13 +179,13 @@ var SortLib = (function () {
       arr[j + 1] = current;
     }
 
-    reportStats('insertionSort', order, comparisons, moves, 'Переміщень');
-    reportSparse(undefinedCount, inputArr.length, 'insertionSort');
+    reportStats('Insertion Sort', order, comparisons, moves, 'Переміщень');
+    reportSparse(undefinedCount, inputArr.length, 'Insertion Sort');
 
     return finishSort(arr, undefinedCount);
   }
 
-  // 4. Сортування Шелла (Shell Sort)
+  // Сортування Шелла
   function shellSort(inputArr, order) {
     order = normalizeOrder(order);
 
@@ -219,13 +220,13 @@ var SortLib = (function () {
       gap = Math.floor(gap / 2);
     }
 
-    reportStats('shellSort', order, comparisons, moves, 'Переміщень');
-    reportSparse(undefinedCount, inputArr.length, 'shellSort');
+    reportStats('Shell Sort', order, comparisons, moves, 'Переміщень');
+    reportSparse(undefinedCount, inputArr.length, 'Shell Sort');
 
     return finishSort(arr, undefinedCount);
   }
 
-  // 5. Швидке сортування Хоара (Quick Sort)
+  // Швидке сортування Хоара
   function quickSort(inputArr, order) {
     order = normalizeOrder(order);
 
@@ -236,7 +237,6 @@ var SortLib = (function () {
     let comparisons = 0;
     let swaps = 0;
 
-    // Обмін двох елементів
     function swap(a, i, j) {
       const temp = a[i];
       a[i] = a[j];
@@ -244,9 +244,9 @@ var SortLib = (function () {
       swaps++;
     }
 
-    // Розбиття масиву за опорним елементом
     function hoarePartition(a, low, high) {
       const pivot = a[Math.floor((low + high) / 2)];
+
       let i = low - 1;
       let j = high + 1;
 
@@ -269,7 +269,6 @@ var SortLib = (function () {
       }
     }
 
-    // Рекурсивне сортування частин масиву
     function quickSortRec(a, low, high) {
       if (low < high) {
         const p = hoarePartition(a, low, high);
@@ -281,13 +280,12 @@ var SortLib = (function () {
 
     quickSortRec(arr, 0, arr.length - 1);
 
-    reportStats('quickSort', order, comparisons, swaps, 'Обмінів');
-    reportSparse(undefinedCount, inputArr.length, 'quickSort');
+    reportStats('Quick Sort (Hoare)', order, comparisons, swaps, 'Обмінів');
+    reportSparse(undefinedCount, inputArr.length, 'Quick Sort');
 
     return finishSort(arr, undefinedCount);
   }
 
-  // Публічний інтерфейс бібліотеки
   return {
     bubbleSort: bubbleSort,
     selectionSort: selectionSort,
@@ -297,21 +295,21 @@ var SortLib = (function () {
   };
 })();
 
-// Експорт для Node.js
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = SortLib;
-}
-
+// Створення тестових масивів
 function runTests() {
-  console.log('ТЕСТУВАННЯ SortLib');
+  const normalArray = [];
 
-  // Початковий тестовий масив
-  const testArray = [45, 12, 78, 3, 56, 12, undefined, 34];
+  for (let i = 0; i < 120; i++) {
+    normalArray.push((i * 37 + 19) % 200 + 1);
+  }
 
-  console.log('\nПочатковий масив:');
-  console.log(testArray);
+  const sparseArray = normalArray.slice();
 
-  // Список алгоритмів сортування
+  delete sparseArray[7];
+  sparseArray[25] = undefined;
+  delete sparseArray[63];
+  sparseArray[100] = undefined;
+
   const methods = [
     ['Bubble Sort', SortLib.bubbleSort],
     ['Selection Sort', SortLib.selectionSort],
@@ -320,34 +318,53 @@ function runTests() {
     ['Quick Sort (Hoare)', SortLib.quickSort]
   ];
 
-  // Перевірка сортування за зростанням і спаданням
-  for (const order of ['asc', 'desc']) {
-    if (order === 'asc') {
-      console.log('Сортування за зростанням');
-    } else {
-      console.log('Сортування за спаданням');
-    }
-    for (const method of methods) {
-      const name = method[0];
-      const sortFunction = method[1];
+  const arrays = [
+    ['Нерозріджений масив', normalArray],
+    ['Розріджений масив', sparseArray]
+  ];
 
-      console.log('\n--- ' + name + ' ---');
+  for (const test of arrays) {
+    const arrayName = test[0];
+    const originalArray = test[1];
 
-      try {
-        // Передаємо копію, щоб зберегти початковий масив
-        const result = sortFunction(testArray.slice(), order);
+    console.log('\n' + arrayName);
+    console.log('Довжина масиву: ' + originalArray.length);
+    console.log('Початковий масив:');
+    console.log(originalArray);
 
-        console.log('Результат сортування:');
-        console.log(result);
-      } catch (error) {
-        console.error('Помилка в алгоритмі ' + name + ':', error.message);
+    for (const order of ['asc', 'desc']) {
+      console.log('\nСортування за ' +
+        (order === 'asc' ? 'зростанням' : 'спаданням'));
+
+      for (const method of methods) {
+        const name = method[0];
+        const sortFunction = method[1];
+
+        console.log('\nМетод: ' + name);
+
+        try {
+          const result = sortFunction(originalArray.slice(), order);
+
+          console.log('Результат:');
+          console.log(result);
+        } catch (error) {
+          console.error('Помилка: ' + error.message);
+        }
       }
     }
   }
 
-  console.log('Тестування завершено');
+  console.log('\nТестування завершено.');
 }
-// Автоматично запускаємо тести, якщо файл запущено через Node.js
-if (typeof module !== 'undefined' && require.main === module) {
+
+// Автоматичний запуск
+if (typeof window !== 'undefined') {
   runTests();
+} else if (typeof module !== 'undefined' && require.main === module) {
+  runTests();
+}
+
+// Експорт для Node.js
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = SortLib;
 }
